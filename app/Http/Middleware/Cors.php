@@ -16,7 +16,7 @@ class Cors
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        $response->headers->set('Access-Control-Allow-Origin', 'https://quarza.online');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 }

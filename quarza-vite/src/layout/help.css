@@ -1,0 +1,36 @@
+.help {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.help-layout {
+    display: flex;
+    text-align: center;
+    text-decoration: none;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.help-layout nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.help-layout a {
+    gap: 30px;
+    text-decoration: none;
+    color: rgb(186, 227, 255);
+}
+
+.help-layout a.active {
+    font-size: 120%;
+    color: var(--active-color);
+}
+
+.outlet {
+    border: 2px solid white;
+    margin: 0;
+}
+  

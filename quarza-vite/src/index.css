@@ -1,0 +1,38 @@
+:root {
+  box-sizing: border-box;
+  --primary-color: rgb(35, 24, 107);
+  --secondary-color: rgb(158, 2, 158);
+  --active-color: rgb(249, 211, 244);
+  --text-color: white;
+}
+
+body {
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  font-family: 'Open Sans', sans-serif;
+}
+
+main {
+  margin: 40px auto;
+}
+
+
+
+/*
+.fafo button {
+  background-color: red;
+  margin-bottom: 100px;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  padding: 10px;
+  color: white;
+  border: 5px solid gray;
+  border-radius: 10px;
+  text-align: center;
+}  
+*/
+
+
+

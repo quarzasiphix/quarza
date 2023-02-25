@@ -23,7 +23,7 @@ const useFetch = (url: string) => {
           })
       }, [url]) // refresh state when url changed
 
-      return {data, pending, error}
+    return {data, pending, error}
 }
 
 export default useFetch

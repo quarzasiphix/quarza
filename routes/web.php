@@ -12,13 +12,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */#
+Route::post('/test', function () {
+    return response()->json(['test' => 'post e']);
+});
 
 Route::get('/login', function () {
-    return view('login');
+    return response()->json(['login' => 'get e ']);
 });
 
 Route::get('/test', function () {
-    return view('test');
+    return view('test e');
 });
 
 Route::get('/', function () {
