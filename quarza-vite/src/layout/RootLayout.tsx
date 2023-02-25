@@ -6,9 +6,10 @@ export default function RootLayout () {
         <> <div className='navbar'>
             <p> quarza </p>
             <div className='links'>
-                <NavLink to="/"> home </NavLink>                
+                <NavLink to="/"> home </NavLink>
                 <NavLink to="/blogs"> blogs </NavLink>
                 <NavLink to="/help"> help </NavLink>
+                <NavLink to="/users"> users </NavLink>
             </div>
         </div>
         <main>
@@ -17,4 +18,3 @@ export default function RootLayout () {
     </>
     )
 }
- 

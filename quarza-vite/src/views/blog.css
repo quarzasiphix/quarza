@@ -3,7 +3,7 @@
 }
 
 .blog-preview {
-    padding: 10px 16px; 
+    padding: 10px 16px;
     margin: 20px;
     border-bottom: 1px solid white;
 }
@@ -11,10 +11,9 @@
 .blog-preview:hover {
     box-shadow: 1px 3px 5px rgb(14, 14, 14);
 }
-  
+
 .blog-preview h2 {
     font-size: 20px;
     color: var(--secondary-color);
     margin-bottom: 8px;
 }
-  

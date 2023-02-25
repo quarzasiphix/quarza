@@ -1,0 +1,10 @@
+.users {
+    margin: 20px;
+
+}
+
+.user {
+    padding: 10px 10px;
+    margin: 5px;
+    border-bottom: 1px solid white;
+}

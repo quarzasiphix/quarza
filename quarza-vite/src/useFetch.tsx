@@ -6,24 +6,22 @@ const useFetch = (url: string) => {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        fetch(url)
-          .then(res => {
-            if(!res.ok) throw Error('fetch failed')
-            console.log(res)
-            return res.json()
-          })
-          .then(data => {
-            setData(data)
-            setPending(false)
-          })
-          .catch(err => {
-            console.log(err.message)
-            setPending(false)
-            setError(err.message)
-          })
-      }, [url]) // refresh state when url changed
+      fetch(url)
+        .then(res => {
+          if(!res.ok) throw Error('fetch failed')
+          return res.json() // parse response body as JSON
+        })
+        .then(data => {
+          setData(data)
+          setPending(false)
+        })
+        .catch(err => {
+          setError(err.message)
+          setPending(false)
+        })
+    }, [url])
 
     return {data, pending, error}
-}
+  }
 
 export default useFetch
