@@ -6,11 +6,13 @@ import { createBrowserRouter,
 import RootLayout from './layout/RootLayout'
 import Home from './views/Home'
 import NotFound from './views/NotFound'
+import Login from './views/Login'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/" element={<RootLayout/>}>
+        <Route path="/" element={<Login/>}>
           <Route index element={<Home/>}/>
+          <Route path="login" element={<Login/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Route>
     )

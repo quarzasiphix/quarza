@@ -1,7 +1,9 @@
+import useFetch from '../useFetch'
+
 const RootLayout = () => {
     return (
         <div>
-            <p> root </p>
+
         </div>
     );
 }
