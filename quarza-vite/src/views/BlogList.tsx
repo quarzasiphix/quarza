@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './blog.css'
+import './styles/blog.css'
 
 interface Blog {
   id: number;
@@ -14,7 +14,7 @@ interface BlogListProps {
 
 const BlogList = ({title}: BlogListProps) => {
   const [blogs, setBlogs]= useState([    {        "title": "site e",         "body": "sup",         "author": "me",         "id": 1    },    {        "title": "waza",         "body": "wazaa sup",         "author": "ea",         "id": 2    },    {        "title": "tes et",         "body": "wazaa sup body",         "author": "me",         "id": 3     }]);
-    return ( 
+    return (
         <div className="blog-list">
         <h2> {title} </h2>
         { blogs.map((blog: Blog) => (
@@ -26,5 +26,5 @@ const BlogList = ({title}: BlogListProps) => {
         </div>
     )
 }
- 
+
 export default BlogList;

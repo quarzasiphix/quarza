@@ -11,6 +11,6 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <h1> login e e</h1>
+    <h1> login </h1>
 </body>
 </html>

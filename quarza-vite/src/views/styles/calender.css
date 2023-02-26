@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    top: 0;
+    gap: 20%;
+}
+.calenders {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.calender {
+    display: flex;
+    height: 200px;
+    width: 200px;
+    border: 2px solid white;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 15px;
+    text-align: center;
+}

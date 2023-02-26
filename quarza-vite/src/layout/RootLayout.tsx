@@ -10,6 +10,7 @@ export default function RootLayout () {
                 <NavLink to="/blogs"> blogs </NavLink>
                 <NavLink to="/help"> help </NavLink>
                 <NavLink to="/users"> users </NavLink>
+                <NavLink to='/calender'> calender </NavLink>
             </div>
         </div>
         <main>

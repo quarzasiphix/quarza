@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,37 +13,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */#
-Route::post('/test', function() {
-    return response()->json(['test' => 'post e']);
-});
 
-Route::get('/test', function() {
-    return view('test e');
+Route::get('/doc', function() {
+    return view('doc');
 });
-
-Route::get('/users', function() {
-    return response()->json([
-        [
-            'id' => 1,
-            'name' => 'test',
-        ],
-        [
-            'id' => 2,
-            'name' => '2test2'
-        ],
-        [
-            'id' => 3,
-            'name' => 'qweqw'
-        ]
-    ]);
-});
-
-Route::get('/login', function() {
-    return response()->json(['login' => 'get e ']);
-});
-
 
 Route::get('/', function() {
     return view('welcome');
 });
 
+Route::post('/test', function() {
+    return response()->json(['test' => 'post e']);
+});
+
+Route::get('/users', function() {
+    return view('users');
+});

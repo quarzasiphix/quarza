@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './home.css'
+import './styles/home.css'
 
 const HomePage = () => {
     const [response, setResponse] = useState<string | null>(null)

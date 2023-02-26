@@ -10,6 +10,8 @@ import HomePage from './views/Home'
 import Contact from './help/contact'
 import Faq from './help/faq'
 
+import Calender from './views/calender'
+
 import RootLayout from './layout/RootLayout'
 import HelpLayout from './layout/HelpLayout'
 
@@ -23,6 +25,7 @@ const router = createBrowserRouter(
         <Route index element={<HomePage/>}/>
         <Route path="users" element={<Users/>}/>
         <Route path="blogs" element={<BlogList title='blogs'/>}/>
+        <Route path="calender" element={<Calender/>}/>
         <Route path="help" element={<HelpLayout/>}>
           <Route path="faq" element={<Faq/>}/>
           <Route path="contact" element={<Contact/>}/>
