@@ -1,27 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
-const useFetch = (url: string) => {
-    const [data , setData] = useState(null)
-    const [pending, setPending] = useState(true)
-    const [error, setError] = useState(null)
+interface ApiResponse<T> {
+    data: T | null;
+    pending: boolean;
+    error: Error | null;
+  }
+
+  function useFetch<T>(url: string): ApiResponse<T> {
+    const [data, setData] = useState<T | null>(null);
+    const [pending, setPending] = useState<boolean>(false);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
+      setPending(true);
       fetch(url)
-        .then(res => {
-          if(!res.ok) throw Error('fetch failed')
-          return res.json() // parse response body as JSON
+        .then((response) => response.json())
+        .then((data: T) => {
+          setData(data);
+          setPending(false);
         })
-        .then(data => {
-          setData(data)
-          setPending(false)
-        })
-        .catch(err => {
-          setError(err.message)
-          setPending(false)
-        })
-    }, [url])
+        .catch((error: Error) => {
+          setError(error);
+          setPending(false);
+        });
+    }, [url]);
 
-    return {data, pending, error}
+    return { data, pending, error };
   }
 
 export default useFetch

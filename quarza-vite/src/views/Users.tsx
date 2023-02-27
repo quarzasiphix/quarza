@@ -9,7 +9,7 @@ interface User {
 
 const useUsers = (url: string) => {
     console.log("fetching users")
-    const { data, pending, error } = useFetch(url);
+    const { data, pending, error } = useFetch<User[]>(url);
     const [users, setUsers] = useState<User[]>([]);
     useEffect(() => {
         if (data) {
@@ -24,9 +24,9 @@ const Users = () => {
 
     if (pending || error) {
         return (
-        <div className="info">
-            <p>{pending ? 'Loading...' : error}</p>
-        </div>
+            <div className="info">
+                <p>{pending ? 'Loading...' : (error ? <span>Error: {error.message}</span> : null)}</p>
+            </div>
         );
     }
 

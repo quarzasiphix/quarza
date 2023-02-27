@@ -7,7 +7,7 @@ const Login = () => {
 
     return (
         <div>
-            <p> login: {data} </p>
+            <p> login: {JSON.stringify(data)} </p>
         </div>
     );
 }
