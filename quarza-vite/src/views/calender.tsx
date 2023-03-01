@@ -17,7 +17,7 @@ const Calender = () => {
             </div>
         </div>
         <div className="calenders">
-            <h1>satan time</h1>
+            <h1>deceived time</h1>
             <div className="calender">
                 <h1>fake year: {FakeYear}</h1>
                 <p>reset date: {startYear}</p>

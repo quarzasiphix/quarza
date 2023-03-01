@@ -5,6 +5,9 @@ export default function RootLayout () {
     return (
         <> <div className='navbar'>
             <p> quarza </p>
+            <div className="search">
+                <p> test </p>
+            </div>
             <div className='links'>
                 <NavLink to="/"> home </NavLink>
                 <NavLink to="/blogs"> blogs </NavLink>

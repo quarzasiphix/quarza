@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import './styles/home.css'
 
 const HomePage = () => {
-    const [response, setResponse] = useState<string | null>(null)
-    const [data, setData] = useState(null)
-    const [pending, setPending] = useState(false)
+    const [response, setResponse] = useState<string>()
+    const [data, setData] = useState(null);
+    const [pending, setPending] = useState<boolean>(false)
+    const [error, setError] = useState<Error>()
 
     const login = () => {
       setPending(true)
@@ -23,6 +24,7 @@ const HomePage = () => {
         })
         .catch(err => {
           console.log(err.message)
+          setError(error)
           setPending(false)
         })
     }
@@ -34,7 +36,7 @@ const HomePage = () => {
         </div>
         <div className='fafosec'>
             <div className='fafo'>
-            <p> response: {response} </p>
+
                 <button onClick={login}> login </button>
             </div>
         </div>
