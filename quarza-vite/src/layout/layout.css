@@ -1,30 +1,91 @@
+:root {
+    --button-size: 50px;
+    --bg:  #242526;
+    --bg-accent: #484a4d;
+    --text-color: #dadce1;
+    --nav-size: 60px;
+    --border: 1px solid #474a4d;
+    --border-radius: 8px;
+    --speed: 500ms;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     background-color: rgba(108, 19, 223, 0.2);
-    padding: 0;
     margin: 0;
     box-sizing: border-box;
     padding: 10px;
+    height: 60px;
 }
 
-.navbar .links {
+.navbar-nav {
     display: flex;
     gap: 16px;
+    justify-content: center;
+    align-items: center;
 }
 
-.navbar .links a {
+.nav a {
     background-color: var(--secondary-color);
-    padding: 10px;
-    color: var(--text-color);
-    text-decoration: none;
     border: 5px solid var(--secondary-color);
+    color: var(--text-color);
     border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
 }
 
-.navbar .links a.active {
+.nav a.active {
     border: 5px solid var(--active-color);
     transition: 100ms;
     color: var(--active-color);
     font-size: 120%;
+}
+
+.nav-button a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    border: 1.5px solid white;
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    height: var(--button-size);
+    width: var(--button-size);
+    transition: 200ms;
+}
+
+.nav-button a:hover {
+    background-color: rgb(187, 187, 187);
+}
+
+.dropdown {
+    position: absolute;
+    top: 58px;
+    width: 300px;
+    transform: translateX(-45%);
+    background-color: var(--bg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.menu-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: background var(--speed);
+    padding: 0.5rem;
+}
+
+.menu-item:hover {
+    background-color: #242526;
+}
+
+.icon-right {
+    margin-left: auto;
 }

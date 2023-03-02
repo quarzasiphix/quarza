@@ -1,24 +1,99 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import './layout.css'
+import { useState } from 'react'
+
+interface NavitemProps {
+  to: string;
+  item: string;
+}
+
+interface NavbuttonProps {
+  to: string;
+  children: React.ReactNode;
+}
+
+interface DropdownItemProps {
+  leftIcon?: string;
+  rightIcon?: string;
+  children: React.ReactNode;
+}
+
+interface DropdownProps {
+  children: React.ReactNode;
+}
+
+interface NavbarProps {
+  children: React.ReactNode;
+}
 
 export default function RootLayout () {
-    return (
-        <> <div className='navbar'>
-            <p> quarza </p>
-            <div className="search">
-                <p> test </p>
-            </div>
-            <div className='links'>
-                <NavLink to="/"> home </NavLink>
-                <NavLink to="/blogs"> blogs </NavLink>
-                <NavLink to="/help"> help </NavLink>
-                <NavLink to="/users"> users </NavLink>
-                <NavLink to='/calender'> calender </NavLink>
-            </div>
-        </div>
-        <main>
-            <Outlet />
-        </main>
+  return (
+    <>
+      <Navbar>
+        <Navitem to="/"> home </Navitem>
+        <Navitem to="/blogs"> blogs </Navitem>
+        <Navitem to="/help"> help </Navitem>
+        <Navitem to="/users"> users </Navitem>
+        <Navitem to='/calender'> calender </Navitem>
+        <Navbutton to="/" item="x">
+          <Dropdown />
+        </Navbutton>
+      </Navbar>
+      <main>
+        <Outlet />
+      </main>
     </>
+  )
+}
+
+function Navbar(props: NavbarProps) {
+  return (
+    <nav className="navbar">
+      <p> quarza </p>
+      <div className="navbar-nav">{props.children}</div>
+    </nav>
+  )
+}
+
+function Navitem(props: NavitemProps) {
+  return (
+    <>
+      <div className="nav">
+        <NavLink to={props.to}>{props.item}</NavLink>
+      </div>
+    </>
+  )
+}
+
+function Dropdown(props: DropdownProps) {
+  function DropdownItem(props: DropdownItemProps) {
+    return (
+      <a href="#" className="menu-item">
+        <span className="icon-buton">{props.leftIcon}</span>
+        {props.children}
+        <span className="icon-right">{props.rightIcon}</span>
+      </a>
     )
+  }
+
+  return (
+    <div className="dropdown">
+      {props.children}
+      <DropdownItem>profile</DropdownItem>
+      <DropdownItem leftIcon="l" rightIcon="r"></DropdownItem>
+    </div>
+  )
+}
+
+function Navbutton(props: NavbuttonProps) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div className="nav-button">
+      <NavLink to={props.to} onClick={() => setOpen(!open)}>
+        {props.children}
+      </NavLink>
+      {open && props.children}
+    </div>
+  )
 }
