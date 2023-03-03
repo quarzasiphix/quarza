@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\products;
 use Illuminate\Http\Request;
-use App\Models\items;
 
-class ItemController extends Controller
+class productController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return items::orderBy('created_at', 'DESC')->get();
+        //
     }
 
     /**
@@ -28,11 +28,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $newitem = new items;
-        $newitem->name = $request->item['name'];
-        $newitem->save();
+        $newprod = new products;
+        $newprod->name = $request->product['name'];
+        $newprod->price = $request->product['pice'];
+        $newprod->save();
 
-        return $newitem
+        return $newprod;
     }
 
     /**

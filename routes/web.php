@@ -14,6 +14,7 @@ use App\Http\Controllers\userController;
 |
 */#
 
+
 Route::get('/doc', function() {
     return view('doc');
 });
