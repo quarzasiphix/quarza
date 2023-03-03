@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 interface NavitemProps {
   to: string;
-  item: string;
+  children: React.ReactNode;
 }
 
 interface NavbuttonProps {
@@ -35,9 +35,6 @@ export default function RootLayout () {
         <Navitem to="/help"> help </Navitem>
         <Navitem to="/users"> users </Navitem>
         <Navitem to='/calender'> calender </Navitem>
-        <Navbutton to="/" item="x">
-          <Dropdown />
-        </Navbutton>
       </Navbar>
       <main>
         <Outlet />
@@ -59,7 +56,7 @@ function Navitem(props: NavitemProps) {
   return (
     <>
       <div className="nav">
-        <NavLink to={props.to}>{props.item}</NavLink>
+        <NavLink to={props.to}>{props.children}</NavLink>
       </div>
     </>
   )
@@ -80,7 +77,6 @@ function Dropdown(props: DropdownProps) {
     <div className="dropdown">
       {props.children}
       <DropdownItem>profile</DropdownItem>
-      <DropdownItem leftIcon="l" rightIcon="r"></DropdownItem>
     </div>
   )
 }
