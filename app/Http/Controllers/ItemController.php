@@ -32,7 +32,7 @@ class ItemController extends Controller
         $newitem->name = $request->item['name'];
         $newitem->save();
 
-        return $newitem
+        return $newitem;
     }
 
     /**
