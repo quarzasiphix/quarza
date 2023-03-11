@@ -1,0 +1,31 @@
+.item-list {
+    margin: 20px;
+}
+
+.item-preview {
+    padding: 10px 16px;
+    margin: 20px;
+    border-bottom: 1px solid white;
+}
+
+.item-preview:hover {
+    box-shadow: 1px 3px 5px rgb(14, 14, 14);
+}
+
+.item-preview h2 {
+    font-size: 20px;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+.item-preview button {
+    color: white;
+    background-color: gray;
+    border-radius: 10px;
+    border-style: none;
+}
+
+.item-preview button:hover {
+    background-color: rgb(71, 71, 71);
+    transition: 100ms;
+}

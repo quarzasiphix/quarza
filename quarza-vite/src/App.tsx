@@ -7,8 +7,10 @@ import { createBrowserRouter,
 import { useState, useEffect } from 'react'
 import BlogList from './views/BlogList'
 import HomePage from './views/Home'
+import Items from './views/Items'
 import Contact from './help/contact'
 import Faq from './help/faq'
+
 
 import Calender from './views/calender'
 
@@ -22,17 +24,17 @@ import './index.css'
 const router = createBrowserRouter(
   createRoutesFromElements(<>
     <Route path="/" element={<RootLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="users" element={<Users />} />
-          <Route path="blogs" element={<BlogList title='blogs' />} />
-          <Route path="calender" element={<Calender />} />
-          <Route path="help" element={<HelpLayout />}>
-              <Route path="faq" element={<Faq />} />
-              <Route path="contact" element={<Contact />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-      </Route>
-      </>
+            <Route index element={<HomePage />} />
+            <Route path="users" element={<Users />} />
+            <Route path="blogs" element={<BlogList title='blogs' />} />
+            <Route path="calender" element={<Calender />} />
+            <Route path="help" element={<HelpLayout />}>
+                <Route path="items" element={<Items />} />
+                <Route path="faq" element={<Faq />} />
+                <Route path="contact" element={<Contact />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+    </Route> </>
     )
 )
 

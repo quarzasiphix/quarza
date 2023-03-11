@@ -33,7 +33,3 @@ Route::get('/test', function() {
 Route::get('/baloo', function() {
     return view('baloo');
 });
-
-Route::get('/users', function() {
-    return view('users');
-});

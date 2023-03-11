@@ -1,48 +1,35 @@
-import { useState, useEffect } from 'react'
-import './styles/home.css'
+import { useState } from 'react';
+import './styles/home.css';
+import useFetch from '../useFetch';
 
 const HomePage = () => {
-    const [response, setResponse] = useState<string>()
-    const [data, setData] = useState(null);
-    const [pending, setPending] = useState<boolean>(false)
-    const [error, setError] = useState<Error>()
+  const [res, setRes] = useState<string | null>(null);
+  const [pending, setPending] = useState<boolean>(true);
+  const [err, setErr] = useState<string | null>(null);
 
-    const login = () => {
-      setPending(true)
-      console.log("pressed login")
-      fetch("https://api.quarza.online/login")
-        .then(res => {
-          if (!res.ok) throw Error('fetch failed')
-          console.log(res)
-          return res.json()
-        })
-        .then(data => {
-          setData(data)
-          setPending(false)
-          console.log("response: ", data)
-          setResponse(JSON.stringify(data.login)) // Convert data to JSON string
-        })
-        .catch(err => {
-          console.log(err.message)
-          setError(error)
-          setPending(false)
-        })
-    }
+  const handleLogin = () => {
+    setPending(true);
+    const { data, error, pending } = useFetch('https://api.quarza.online/test');
+    setPending(false);
+    if (error) setErr(error.message);
+    else setRes(data as string);
+  };
 
-    return (
-        <>
-        <div className="home">
+  return (
+    <>
+      <div className="home">
         <h1> yaaa its home </h1>
+      </div>
+      <div className="fafosec">
+        <div className="fafo">
+          {res && <h1>{res}</h1>}
+          {err && <p>Error: {err}</p>}
+          {pending && <p>Loading...</p>}
+          <button onClick={handleLogin}> test </button>
         </div>
-        <div className='fafosec'>
-            <div className='fafo'>
+      </div>
+    </>
+  );
+};
 
-                <button onClick={login}> login </button>
-            </div>
-        </div>
-        </>
-    )
-}
-
-
-export default HomePage
+export default HomePage;
