@@ -27,20 +27,17 @@ interface NavbarProps {
 }
 
 export default function RootLayout () {
-  return (
-    <>
+  return (<>
       <Navbar>
         <Navitem to="/"> home </Navitem>
         <Navitem to="/blogs"> blogs </Navitem>
         <Navitem to="/help"> help </Navitem>
-        <Navitem to="/users"> users </Navitem>
         <Navitem to='/calender'> calender </Navitem>
       </Navbar>
       <main>
         <Outlet />
-      </main>
-    </>
-  )
+      </main></>
+    )
 }
 
 function Navbar(props: NavbarProps) {
