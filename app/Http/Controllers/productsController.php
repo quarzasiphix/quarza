@@ -12,7 +12,7 @@ class productsController extends Controller
      */
     public function index()
     {
-        //
+        return product::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -29,8 +29,8 @@ class productsController extends Controller
     public function store(Request $request)
     {
         $newitem = new product;
-        $newitem->name = $request->prouct['name'];
-        $newitem->price = $request->prouct['price'];
+        $newitem->name = $request->product['name'];
+        $newitem->price = $request->product['price'];
         $newitem->save();
         return $newitem;
     }
