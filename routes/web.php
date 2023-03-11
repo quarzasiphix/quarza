@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\demoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 
@@ -23,8 +24,14 @@ Route::get('/', function() {
     return view('welcome');
 });
 
+Route::get('/demo', [demoController::class, 'demo']);
+
 Route::get('/test', function() {
     return response()->json(['test' => 'yoooo']);
+});
+
+Route::get('/baloo', function() {
+    return view('baloo');
 });
 
 Route::get('/users', function() {

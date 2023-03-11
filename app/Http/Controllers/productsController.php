@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\products;
+use App\Models\product;
 use Illuminate\Http\Request;
 
-class productController extends Controller
+class productsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,12 +28,11 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        $newprod = new products;
-        $newprod->name = $request->product['name'];
-        $newprod->price = $request->product['pice'];
-        $newprod->save();
-
-        return $newprod;
+        $newitem = new product;
+        $newitem->name = $request->prouct['name'];
+        $newitem->price = $request->prouct['price'];
+        $newitem->save();
+        return $newitem;
     }
 
     /**

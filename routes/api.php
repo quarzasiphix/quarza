@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\productController;
+use App\Http\Controllers\productsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,14 +20,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/products', [productController::class], 'index');
-Route::prefix('/items')->group( function() {
-    Route::post('/product', [productController::class], 'store');
+Route::get('/products', [productsController::class], 'index');
+Route::prefix('/product')->group( function() {
+    Route::post('/store', [productsController::class], 'store');
 });
 
+//Route::post('/store', [productsController::class], 'index');
+
+
+Route::prefix('/store')->group( function() {
+    Route::get('/', [productsController::class, 'index']);
+    Route::post('/product', [productsController::class], 'store');
+});
+
+
+
 /*route::prefix('/products')->group( function() {
-    Route::get('/products', [productController::class], 'index');
-    //Route::get('/{id}', [productController::class, 'get']);
+    Route::get('/products', [productsController::class], 'index');
+    //Route::get('/{id}', [productsController::class, 'get']);
     //});*/
 
 
