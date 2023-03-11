@@ -30,7 +30,7 @@ class productsController extends Controller
     {
         $newitem = new product;
         $newitem->name = $request->product['name'];
-        $newitem->price = $request->product['price'];
+        $newitem->price = isset($request->product['price']) ? $request->product['price'] : null;
         $newitem->save();
         return $newitem;
     }
