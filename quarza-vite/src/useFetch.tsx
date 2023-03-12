@@ -4,15 +4,21 @@ export interface ApiResponse<T> {
     data: T | null;
     pending: boolean;
     error: Error | null;
+}
+
+interface ApiError extends Error {
+    status: number;
+    data?: any;
   }
 
-  function useFetch<T>(
+
+function useFetch<T>(
     url: string,
     options: { method?: string; body?: any } = {}
-  ): ApiResponse<T> {
+): ApiResponse<T> {
     const [data, setData] = useState<T | null>(null);
+    const [error, setError] = useState<ApiError | null>(null);
     const [pending, setPending] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
 
     const { method = "GET", body } = options;
 
@@ -30,13 +36,13 @@ export interface ApiResponse<T> {
           setData(data);
           setPending(false);
         })
-        .catch((error: Error) => {
-          setError(error);
-          setPending(false);
-        });
+        .catch((error: unknown) => {
+            setError(error);
+            setPending(false);
+          });
     }, [url, method, body]);
 
-    return { data, pending, error}
+    return { data, pending, error: error || null };
 }
 
 export default useFetch

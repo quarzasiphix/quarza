@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useFetch, { ApiResponse } from "../useFetch";
-import './styles/items.css'
+import "./styles/items.css";
 
 interface Item {
   id: number;
@@ -10,79 +10,76 @@ interface Item {
 }
 
 const Items = () => {
-    const [err, setErr] = useState(false);
+    const [error, setError] = useState<any>(null);
     const [response, setResponse] = useState<ApiResponse<Item>>({
-        data: null,
-        pending: false,
-        error: null,
-    });
+    data: null,
+    pending: false,
+    error: null,
+  });
 
-    const { data: items, error, pending } = useFetch<Item[]>(
-        "https://api.quarza.online/api/items"
-    );
+  const { data: items, error, pending } = useFetch<Item[]>(
+    "https://api.quarza.online/api/items"
+  );
 
-    const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
-    const handleInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setInputValue(event.target.value);
-    };
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputValue(event.target.value);
+  };
 
-    const Additem = (name: string) => {
-        const { error, pending } = useFetch<items[]>(
-        "https://api.quarza.online/api/items",
-        {
-            method: "post",
-            body: {
-            item: {
-                name: name,
-            },
-            },
-        });
+  const addItem = async (name: string) => {
+    setResponse({ data: null, pending: true, error });
+    try {
+      const response = await fetch("https://api.quarza.online/api/items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+      const data = await response.json();
+      setResponse({ data, pending: false, error: null });
+    } catch (error) {
+        setResponse({ data: null, pending: false, error });
+    }
+  };
 
-        if (pending) return <div>Adding item...</div>;
+  const handleButtonClick = () => {
+    addItem(inputValue);
+  };
 
-        if (error) return <div>{error.message}</div>;
+  if (pending) return <div>Loading...</div>;
 
-        return null;
-    };
+  if (error) return <div>{error.message}</div>;
 
-    const handleButtonClick = () => {
-        Additem(inputValue);
-    };
-
-
-    if (pending) return <div>Loading...</div>;
-
-    if (error) return <div>{error.message}</div>;
-
-    return (
-        <div className="item-list">
-        <div>
-            <input type="text" value={inputValue} onChange={handleInputChange} />
-            <button onClick={handleButtonClick}>Add item</button>
-            {response.pending && <div>Loading...</div>}
-            {response.error && <div>{response.error.message}</div>}
-            {response.data && (
-            <div className="item-preview" key={response.data.id}>
-                <h2>{response.data.name}</h2>
-                <p>
-                {response.data.completed === 1 ? "Completed" : "Not completed"}
-                </p>
-                <p>
-                {response.data.created_at &&
-                    new Date(response.data.created_at).toLocaleDateString(
-                    "en-US",
-                    { month: "short", year: "2-digit", day: "2-digit" }
-                    )}{" "}
-                {response.data.created_at &&
-                    new Date(response.data.created_at).toLocaleTimeString()}
-                </p>
-                <button>complete</button>
-            </div>
-            )}
-        </div>
+  return (
+    <div className="item-list">
+      <div>
+        <input type="text" value={inputValue} onChange={handleInputChange} />
+        <button onClick={handleButtonClick}>Add item</button>
+        {response.pending && <div>Loading...</div>}
+        {response.error && <div>{response.error.message}</div>}
+        {response.data && (
+          <div className="item-preview" key={response.data.id}>
+            <h2>{response.data.name}</h2>
+            <p>
+              {response.data.completed === 1 ? "Completed" : "Not completed"}
+            </p>
+            <p>
+              {response.data.created_at &&
+                new Date(response.data.created_at).toLocaleDateString(
+                  "en-US",
+                  { month: "short", year: "2-digit", day: "2-digit" }
+                )}{" "}
+              {response.data.created_at &&
+                new Date(response.data.created_at).toLocaleTimeString()}
+            </p>
+            <button>complete</button>
+          </div>
+        )}
+      </div>
 
         <div>
             {items?.map((item) => (
