@@ -1,43 +1,112 @@
-import { useState } from "react"
-import useFetch from "../useFetch"
+import { useState } from "react";
+import useFetch, { ApiResponse } from "../useFetch";
 import './styles/items.css'
 
-interface getitems {
-    data: string
-}
-
-interface items {
-    id: number
-    name: string
-    price: number
-    completed: number
-    created_at: Date
+interface Item {
+  id: number;
+  name: string;
+  completed: number;
+  created_at: string;
 }
 
 const Items = () => {
-    const [err, setErr] = useState(false)
-    const { data: items, error, pending } = useFetch<items[]>('https://api.quarza.online/api/items');
+    const [err, setErr] = useState(false);
+    const [response, setResponse] = useState<ApiResponse<Item>>({
+        data: null,
+        pending: false,
+        error: null,
+    });
 
-    if (pending)  return <div>Loading...</div>
+    const { data: items, error, pending } = useFetch<Item[]>(
+        "https://api.quarza.online/api/items"
+    );
+
+    const [inputValue, setInputValue] = useState("");
+
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setInputValue(event.target.value);
+    };
+
+    const Additem = (name: string) => {
+        const { error, pending } = useFetch<items[]>(
+        "https://api.quarza.online/api/items",
+        {
+            method: "post",
+            body: {
+            item: {
+                name: name,
+            },
+            },
+        });
+
+        if (pending) return <div>Adding item...</div>;
+
+        if (error) return <div>{error.message}</div>;
+
+        return null;
+    };
+
+    const handleButtonClick = () => {
+        Additem(inputValue);
+    };
+
+
+    if (pending) return <div>Loading...</div>;
+
+    if (error) return <div>{error.message}</div>;
 
     return (
         <div className="item-list">
-        {error ? (
-            <div>{error.message}</div>
-        ) : (
-            <div>
-                {items?.map((item) => (
-                    <div className="item-preview" key={item.id}>
-                        <h2>{item.name}</h2>
-                        <p>{item.completed === 1 ? 'Completed' : 'Not completed'}</p>
-                        <p>{item.created_at && new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', year: '2-digit', day: '2-digit' })} {item.created_at && new Date(item.created_at).toLocaleTimeString()}</p>
-                        <button>complete</button>
-                    </div>
-                ))}
+        <div>
+            <input type="text" value={inputValue} onChange={handleInputChange} />
+            <button onClick={handleButtonClick}>Add item</button>
+            {response.pending && <div>Loading...</div>}
+            {response.error && <div>{response.error.message}</div>}
+            {response.data && (
+            <div className="item-preview" key={response.data.id}>
+                <h2>{response.data.name}</h2>
+                <p>
+                {response.data.completed === 1 ? "Completed" : "Not completed"}
+                </p>
+                <p>
+                {response.data.created_at &&
+                    new Date(response.data.created_at).toLocaleDateString(
+                    "en-US",
+                    { month: "short", year: "2-digit", day: "2-digit" }
+                    )}{" "}
+                {response.data.created_at &&
+                    new Date(response.data.created_at).toLocaleTimeString()}
+                </p>
+                <button>complete</button>
             </div>
-        )}
+            )}
         </div>
-    )
-}
 
-export default Items
+        <div>
+            {items?.map((item) => (
+            <div className="item-preview" key={item.id}>
+                <h2>{item.name}</h2>
+                <p>
+                {item.completed === 1 ? "Completed" : "Not completed"}
+                </p>
+                <p>
+                {item.created_at &&
+                    new Date(item.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "2-digit",
+                    day: "2-digit",
+                    })}{" "}
+                {item.created_at &&
+                    new Date(item.created_at).toLocaleTimeString()}
+                </p>
+                <button>complete</button>
+            </div>
+            ))}
+        </div>
+    </div>
+  );
+};
+
+export default Items;
