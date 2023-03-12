@@ -10,14 +10,14 @@ interface Item {
 }
 
 const Items = () => {
-    const [error, setError] = useState<any>(null);
-    const [response, setResponse] = useState<ApiResponse<Item>>({
+  const [error, setError] = useState<Error | null>(null);
+  const [response, setResponse] = useState<ApiResponse<Item>>({
     data: null,
     pending: false,
     error: null,
   });
 
-  const { data: items, error, pending } = useFetch<Item[]>(
+  const { data: items, error: fetchError, pending } = useFetch<Item[]>(
     "https://api.quarza.online/api/items"
   );
 
@@ -30,19 +30,29 @@ const Items = () => {
   };
 
   const addItem = async (name: string) => {
-    setResponse({ data: null, pending: true, error });
+    setResponse({ data: null, pending: true, error: null });
     try {
-      const response = await fetch("https://api.quarza.online/api/items", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
-      });
+      const response = await fetch(
+        "https://api.quarza.online/api/item/store",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ item: {name} }),
+        }
+      );
       const data = await response.json();
       setResponse({ data, pending: false, error: null });
     } catch (error) {
-        setResponse({ data: null, pending: false, error });
+      console.error(error);
+      setResponse({
+        data: null,
+        pending: false,
+        error: new Error(
+          "An error occurred while adding the item."
+        ),
+      });
     }
   };
 
@@ -52,7 +62,13 @@ const Items = () => {
 
   if (pending) return <div>Loading...</div>;
 
-  if (error) return <div>{error.message}</div>;
+  if (fetchError || error)
+    return (
+      <div>
+        {fetchError && <div>{fetchError.message}</div>}
+        {error && <div>{error.message}</div>}
+      </div>
+    );
 
   return (
     <div className="item-list">
@@ -65,7 +81,9 @@ const Items = () => {
           <div className="item-preview" key={response.data.id}>
             <h2>{response.data.name}</h2>
             <p>
-              {response.data.completed === 1 ? "Completed" : "Not completed"}
+              {response.data.completed === 1
+                ? "Completed"
+                : "Not completed"}
             </p>
             <p>
               {response.data.created_at &&
@@ -80,30 +98,29 @@ const Items = () => {
           </div>
         )}
       </div>
-
-        <div>
-            {items?.map((item) => (
-            <div className="item-preview" key={item.id}>
-                <h2>{item.name}</h2>
-                <p>
-                {item.completed === 1 ? "Completed" : "Not completed"}
-                </p>
-                <p>
-                {item.created_at &&
-                    new Date(item.created_at).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "2-digit",
-                    day: "2-digit",
-                    })}{" "}
-                {item.created_at &&
-                    new Date(item.created_at).toLocaleTimeString()}
-                </p>
-                <button>complete</button>
+      <div>
+        {items?.map((item) => (
+          <div className="item-preview" key={item.id}>
+            <h2>{item.name}</h2>
+            <p>
+              {item.completed === 1 ? "Completed" : "Not completed"}
+                        </p>
+                        <p>
+                            {item.created_at &&
+                                new Date(item.created_at).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    year: "2-digit",
+                                    day: "2-digit",
+                                })}{" "}
+                            {item.created_at &&
+                                new Date(item.created_at).toLocaleTimeString()}
+                        </p>
+                        <button>complete</button>
+                    </div>
+                ))}
             </div>
-            ))}
         </div>
-    </div>
-  );
+    );
 };
 
 export default Items;
