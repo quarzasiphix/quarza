@@ -15,11 +15,11 @@ const Items = () => {
     data: null,
     pending: false,
     error: null,
+    refetch: () => {},
   });
 
-  const { data: items, error: fetchError, pending } = useFetch<Item[]>(
-    "https://api.quarza.online/api/items"
-  );
+  const { data: items, error: fetchError, pending, refetch } =
+    useFetch<Item[]>("https://api.quarza.online/api/items");
 
   const [inputValue, setInputValue] = useState("");
 
@@ -30,7 +30,7 @@ const Items = () => {
   };
 
   const addItem = async (name: string) => {
-    setResponse({ data: null, pending: true, error: null });
+    setResponse({ data: null, pending: true, error: null, refetch });
     try {
       const response = await fetch(
         "https://api.quarza.online/api/item/store",
@@ -39,19 +39,19 @@ const Items = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ item: {name} }),
+          body: JSON.stringify({ item: { name } }),
         }
       );
       const data = await response.json();
-      setResponse({ data, pending: false, error: null });
+      setResponse({ data, pending: false, error: null, refetch });
+      refetch(); // <-- Move outside of useEffect hook
     } catch (error) {
       console.error(error);
       setResponse({
         data: null,
         pending: false,
-        error: new Error(
-          "An error occurred while adding the item."
-        ),
+        error: new Error("An error occurred while adding the item."),
+        refetch,
       });
     }
   };
@@ -81,16 +81,15 @@ const Items = () => {
           <div className="item-preview" key={response.data.id}>
             <h2>{response.data.name}</h2>
             <p>
-              {response.data.completed === 1
-                ? "Completed"
-                : "Not completed"}
+              {response.data.completed === 1 ? "Completed" : "Not completed"}
             </p>
             <p>
               {response.data.created_at &&
-                new Date(response.data.created_at).toLocaleDateString(
-                  "en-US",
-                  { month: "short", year: "2-digit", day: "2-digit" }
-                )}{" "}
+                new Date(response.data.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "2-digit",
+                  day: "2-digit",
+                })}{" "}
               {response.data.created_at &&
                 new Date(response.data.created_at).toLocaleTimeString()}
             </p>
@@ -100,26 +99,25 @@ const Items = () => {
       </div>
       <div>
         {items?.map((item) => (
-          <div className="item-preview" key={item.id}>
+        <div className="item-preview" key={item.id}>
             <h2>{item.name}</h2>
             <p>
-              {item.completed === 1 ? "Completed" : "Not completed"}
-                        </p>
-                        <p>
-                            {item.created_at &&
-                                new Date(item.created_at).toLocaleDateString("en-US", {
-                                    month: "short",
-                                    year: "2-digit",
-                                    day: "2-digit",
-                                })}{" "}
-                            {item.created_at &&
-                                new Date(item.created_at).toLocaleTimeString()}
-                        </p>
-                        <button>complete</button>
-                    </div>
-                ))}
-            </div>
-        </div>
+            {item.completed === 1 ? "Completed" : "Not completed"}
+            </p>
+                <p>
+                    {item.created_at &&
+                        new Date(item.created_at).toLocaleDateString("en-US", {
+                            month: "short",
+                            year: "2-digit",
+                            day: "2-digit",
+                        })}{" "}
+                    {item.created_at &&
+                        new Date(item.created_at).toLocaleTimeString()}
+                </p>
+                <button>complete</button>
+        </div>))}
+    </div>
+    </div>
     );
 };
 
