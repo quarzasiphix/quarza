@@ -4,7 +4,6 @@ export interface ApiResponse<T> {
   data: T | null;
   pending: boolean;
   error: ApiError | null;
-  refetch: () => void;
 }
 
 interface ApiError extends Error {
@@ -55,11 +54,8 @@ function useFetch<T>(
     fetchData();
   }, [url, method, body]);
 
-  const refetch = () => {
-    fetchData();
-  };
 
-  return { data, pending, error, refetch };
+  return { data, pending, error};
 }
 
 export default useFetch;
