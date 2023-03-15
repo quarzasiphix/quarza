@@ -9,45 +9,58 @@ interface Item {
     created_at: string;
 }
 
+const apiurl = "https://api.quarza.online/api/items"
+
 const Items = () => {
-    const [todo, setTodo] = useState<Item>()
+    const [todos, setTodos] = useState<Item[] | null>(null);
     const [error, setError] = useState<Error | null>(null);
+    const [loading, setLoading] = useState(true);
     const [response, setResponse] = useState<ApiResponse<Item>>({
-        data: null,
-        pending: false,
-        error: null,
+      data: null,
+      pending: false,
+      error: null,
     });
 
-    const { data: items, pending: pending, error: fetchError} =
-        useFetch<Item[]>("https://api.quarza.online/api/items");
+    const { data, pending: pendingFetch, error: fetchError } =
+      useFetch<Item[]>(apiurl);
+
+    if (!pendingFetch && loading) {
+      setLoading(false);
+      setTodos(data as Item[]);
+    }
 
     const [inputValue, setInputValue] = useState("");
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
+    const handleInputChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      setInputValue(event.target.value);
     };
 
     const addItem = async (name: string) => {
+      setResponse({ data: null, pending: true, error: null });
+      await useFetch("https://api.quarza.online/api/item/store", {
+        method: "post",
+        body: { item: { name: name } },
+      });
 
-
-
-        //setResponse({ data: null, pending: true, error: null});
+      const { data } = await useFetch<Item[]>(apiurl);
+      setTodos(data);
     };
 
     const handleButtonClick = () => {
-        addItem(inputValue);
+      addItem(inputValue);
     };
 
-    if (pending) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;
 
     if (fetchError || error)
-
-    return (
+      return (
         <div>
-            {fetchError && <div>{fetchError.message}</div>}
-            {error && <div>{error.message}</div>}
+          {fetchError && <div>{fetchError.message}</div>}
+          {error && <div>{error.message}</div>}
         </div>
-    );
+      );
 
     return (
         <div className="item-list">
@@ -76,7 +89,7 @@ const Items = () => {
             )}
         </div>
         <div>
-            {items?.map((item) => (
+            {todos?.map((item) => (
             <div className="item-preview" key={item.id}>
                 <h2>{item.name}</h2>
                 <p>
