@@ -27,7 +27,7 @@ Route::get('/', function() {
 Route::get('/demo', [demoController::class, 'demo']);
 
 Route::get('/test', function() {
-    return response()->json(['test' => 'yoooo']);
+    return response()->json(['test' => 'yaaaaa']);
 });
 
 Route::get('/baloo', function() {
