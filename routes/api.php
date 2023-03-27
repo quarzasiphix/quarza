@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\productsController;
+use App\Http\Controllers\workoutsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,10 @@ Route::prefix('/item')->group( function() {
     Route::post('/store', [ItemController::class, 'store']);
     Route::put('/{id}', [ItemController::class, 'update']);
 });
+
+Route::get('/workouts', [workoutsController::class, 'index']);
+Route::prefix('/workout')->group( function() {
+    Route::post('/store', [workoutsController::class, 'store']);
+    Route::delete('/{time}', [workoutsController::class, 'destroy']);
+});
+
