@@ -69,7 +69,7 @@ const Items = () => {
     };
     return (
         <div className="item-list">
-            <CreateItem />
+
         <div>
             {todos?.map((item) => (
             <div className="item-preview" key={item.id}>

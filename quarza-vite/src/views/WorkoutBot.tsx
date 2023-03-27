@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import useFetch, { ApiResponse } from "../useFetch"
+
 
 interface Workout {
     id: number;
@@ -10,33 +12,56 @@ interface Workout {
 }
 
 const WorkoutReminder = () => {
-    const { data, pending, error } = useFetch<Workout[]>(
-        "https://api.quarza.online/api/workouts"
-      );
+    const [workouts, setWorkouts] = useState<Workout[]>([]);
+    const [error, setError] = useState<Error | null>(null);
+    const [fetched, setFetched] = useState(false);
+    const [fetchKey, setFetchKey] = useState(0);
 
-      if (pending) {
-        return <p>Loading...</p>;
-      }
+    const getData = async () => {
+        const { data, pending, error } = await useFetch<Workout[]>(
+          "https://api.quarza.online/api/workouts"
+        );
 
-      if (error) {
-        return <p>Error: {error.message}</p>;
-      }
+        if (!pending && !error) {
+          setWorkouts(data || []);
+          setError(null);
+        } else if (error) {
+          setError(error);
+          setWorkouts([]);
+        }
 
-      if (!data) {
-        return null;
-      }
+        setFetched(true);
+    };
 
-      return (
-        <ul>
-          {data.map((workout) => (
-            <li key={workout.id}>
-              <h4>{workout.workout}</h4>
-              <p>time: {workout.time}</p>
-              <p>{workout.todo}</p>
-            </li>
-          ))}
-        </ul>
-      );
-}
+    useEffect(() => {
+      getData();
+    }, [fetchKey]);
 
-export default WorkoutReminder
+    const refreshData = () => {
+      setWorkouts([]);
+      setError(null);
+      setFetchKey(prevKey => prevKey + 1);
+    };
+
+    return (
+      <div>
+        {error && <p>{error.message}</p>}
+        {workouts.length > 0 ? (
+          <ul>
+            {workouts.map((workout) => (
+              <li key={workout.id}>
+                time: {workout.time}
+                {workout.workout}
+                {workout.todo}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>{fetched ? "No workouts found" : "Loading..."}</p>
+        )}
+        <button onClick={refreshData}>Refresh</button>
+      </div>
+    );
+};
+
+export default WorkoutReminder;
