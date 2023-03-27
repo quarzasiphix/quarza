@@ -157,6 +157,8 @@ const WorkoutReminder = () => {
         );
     }
 
+    const sortedWorkouts = data?.sort((a, b) => a.time - b.time);
+
     return (<>
     <div className="secs">
         <AddWorkout/>
@@ -165,11 +167,11 @@ const WorkoutReminder = () => {
     <div className="sec">
         <div className="workout-preview">
         <ul>
-        {data.map((workout) => (
+        {sortedWorkouts?.map((workout) => (
             <li key={workout.id}>
-            <h4>{workout.workout}</h4>
-            <p>time: {workout.time}</p>
-            <p>{workout.todo}</p>
+            <h2>hour: {workout.time}</h2>
+            <h3>{workout.workout}</h3>
+            <h5>{workout.todo}</h5>
             </li>
         ))}
         </ul>
