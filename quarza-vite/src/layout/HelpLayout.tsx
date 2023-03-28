@@ -8,7 +8,7 @@ export default function HelpLayout () {
                 <h1> help </h1>
                 <nav>
                     <NavLink to="./faq"> view faq </NavLink>
-                    <NavLink to="./contact"> contact us </NavLink>
+                    <NavLink to="./contact"> contact me </NavLink>
                 </nav>
                 <Outlet />
             </div>
