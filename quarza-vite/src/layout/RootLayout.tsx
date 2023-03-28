@@ -32,7 +32,7 @@ export default function RootLayout () {
         <Navitem to="/"> home </Navitem>
         <Navitem to="/blogs"> blogs </Navitem>
         <Navitem to="/help"> help </Navitem>
-        <Navitem to='/calender'> calender </Navitem>
+        <Navitem to="/remind"> remind </Navitem>
       </Navbar>
       <main>
         <Outlet />

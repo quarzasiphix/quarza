@@ -12,12 +12,13 @@
 .secs {
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     flex-direction: row;
     border: 2px solid white;
     align-items: center;
     margin: 0px;
     padding: 0;
+    gap: 40px;
 }
 
 .add {
@@ -26,7 +27,7 @@
     justify-content: center;
     border: 3px solid gray;
     flex-direction: column;
-    width: 130px;
+    width: 250px;
     height: 270px;
     padding: 0px;
     border-radius: 20px;
@@ -44,6 +45,31 @@
     border-radius: 20px;
 }
 
+
+.info {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid gray;
+    flex-direction: column;
+    width: 200px;
+    height: 130px;
+    padding: 0px;
+    border-radius: 20px;
+}
+
+.info p {
+    font-size: 20px;
+}
+
+.info .time {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
 .workout-preview {
     display: flex;
     padding: 10px 16px;
@@ -51,6 +77,10 @@
     border-bottom: 1px solid white;
 }
 
-input {
+.workout input {
+    width: 100px;
+}
+
+.remove input {
     width: 50px;
 }

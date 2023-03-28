@@ -17,7 +17,9 @@ const Faq = () => {
 
   return (
     <div className="test">
-      {pending ? <p>Loading...</p> : error ? <p>Error: {error.message}</p> : data ? <h2>Response: {data.test}</h2> : null}
+      {pending ? <p>Loading...</p>
+      : error ?  <p>Error: {error.message}</p>
+      : data ? <h2>Response: {data.test}</h2> : null}
     </div>
   );
 };

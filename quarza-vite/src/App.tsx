@@ -21,6 +21,7 @@ import Users from './views/Users'
 import NotFound from './views/NotFound'
 import './index.css'
 import WorkoutReminder from './views/WorkoutBot'
+import Remind from './views/remind'
 
 const router = createBrowserRouter(
   createRoutesFromElements(<>
@@ -29,7 +30,9 @@ const router = createBrowserRouter(
             <Route path="users" element={<Users />} />
             <Route path="blogs" element={<BlogList title='blogs' />} />
             <Route path="calender" element={<Calender />} />
-            <Route path="reminder" element={<WorkoutReminder />} />
+            <Route path="remind" element={<Remind/>} />
+
+            <Route path="workout" element={<WorkoutReminder />} />
             <Route path="help" element={<HelpLayout />}>
                 <Route path="faq" element={<Faq />} />
                 <Route path="contact" element={<Contact />} />
