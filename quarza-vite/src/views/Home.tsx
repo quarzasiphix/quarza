@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './styles/home.css';
 import useFetch from '../useFetch';
+import HelpLayout from '../layout/HelpLayout';
+import { NavLink, Outlet } from 'react-router-dom'
 
 const HomePage = () => {
   const [res, setRes] = useState<string | null>(null);
@@ -22,10 +24,9 @@ const HomePage = () => {
       </div>
       <div className="fafosec">
         <div className="fafo">
-          {res && <h1>{res}</h1>}
-          {err && <p>Error: {err}</p>}
-          {pending && <p>Loading...</p>}
-          <button onClick={handleLogin}> test </button>
+            <NavLink to="./help">
+                view faq
+            </NavLink>
         </div>
       </div>
     </>
