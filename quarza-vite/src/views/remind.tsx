@@ -11,21 +11,33 @@ interface Workout {
     updated_at: string;
 }
 
-const Rewind = () => {
-    const [time, setTime] = useState(new Date().toLocaleTimeString('pl-PL', {timeZone: 'Europe/Warsaw'}));
+interface ApiError extends Error {
+    status: number;
+    data?: any;
+  }
+
+  const Rewind = () => {
+    const [time, setTime] = useState<string>(new Date().toLocaleTimeString('pl-PL', {timeZone: 'Europe/Warsaw'}));
+    const [data, setData] = useState<ApiResponse<Workout[]> | null>(null);
+    const [error, setError] = useState<any | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const url = "https://api.quarza.online/api/workouts"
 
     useEffect(() => {
-      const interval = setInterval(() => {
-        setTime(new Date().toLocaleTimeString('pl-PL', {timeZone: 'Europe/Warsaw'}));
-      }, 1000);
-      return () => clearInterval(interval);
+        const interval = setInterval(() => {
+            setTime(new Date().toLocaleTimeString('pl-PL', {timeZone: 'Europe/Warsaw'}));
+        }, 1000);
+
+        return () => clearInterval(interval);
+
     }, []);
 
-    const { data, pending, error } = useFetch<Workout[]>(
-        "https://api.quarza.online/api/workouts"
-    );
+    const sortedWorkouts = data?.data?.sort((a, b) => a.time - b.time);
 
-    if (pending) {
+
+
+    if (loading) {
         return <p>Loading...</p>;
     }
 
@@ -37,9 +49,6 @@ const Rewind = () => {
         return null;
     }
 
-
-    const sortedWorkouts = data?.sort((a, b) => a.time - b.time);
-
     return (<>
         <div className="secs">
             <div className="info">
@@ -50,20 +59,22 @@ const Rewind = () => {
                 </div>
             </div>
         </div>
-    <div className="secs">
-        <div className="workout-preview">
-        <ul>
-        {sortedWorkouts?.map((workout) => (
-            <li key={workout.id}>
-            <h2>hour: {workout.time}</h2>
-            <h3>{workout.workout}</h3>
-            <h5>{workout.todo}</h5>
-            </li>
-        ))}
-        </ul>
-        </div>
-    </div>
+        {sortedWorkouts && (
+            <div className="secs">
+                <div className="workout-preview">
+                <ul>
+                {sortedWorkouts.map((workout) => (
+                    <li key={workout.id}>
+                    <h2>hour: {workout.time}</h2>
+                    <h3>{workout.workout}</h3>
+                    <h5>{workout.todo}</h5>
+                    </li>
+                ))}
+                </ul>
+                </div>
+            </div>
+        )}
     </>);
 }
 
-export default Rewind;
+export default Rewind
